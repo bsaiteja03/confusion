@@ -1,15 +1,15 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText,CardImgOverlay } from 'reactstrap';
+import { Card, CardImg,CardTitle,CardImgOverlay } from 'reactstrap';
 
       function RenderDish({dishes}){
       return(
         <div className="col-12 col-md-5 m-1">
           <Card>
-          <CardImg width="100%" src={dishes.image} alt={dishes.name} />
-          <CardImgOverlay>
-              <CardTitle>{dishes.name}</CardTitle>
-          </CardImgOverlay>
-      </Card>
+            <CardImg width="100%" src={dishes.image} alt={dishes.name} />
+              <CardImgOverlay>
+                  <CardTitle>{dishes.name}</CardTitle>
+              </CardImgOverlay>
+          </Card>
         </div>
       );
     }
