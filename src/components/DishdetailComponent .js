@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from "react-redux-form";
 
+
 const required = val => val && val.length;
 const maxLength = len => val => !val || val.length <= len;
 const minLength = len => val => val && val.length >= len;
@@ -11,11 +12,12 @@ const minLength = len => val => val && val.length >= len;
 export class CommentForm extends Component {
     constructor(props) {
         super(props);
-
         this.toggleModal = this.toggleModal.bind(this);
         this.state = {
             isModalOpen: false
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     toggleModal() {
@@ -26,7 +28,7 @@ export class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
     render() {
    return (
@@ -123,7 +125,7 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments,addComment,dishId }) {
   if (comments != null) {
     return (
       <div className="col-12 col-md-5 m-1">
@@ -141,7 +143,7 @@ function RenderComments({ comments }) {
             </li>
           </ul>
         ))}
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   } else return <div />;
@@ -162,7 +164,9 @@ const DishDetailComponent = props => (
     </div>
     <div className="row">
       <RenderDish dish={props.dish} />
-      <RenderComments comments={props.comments} />
+      <RenderComments comments={props.comments}
+          addComment={props.addComment}
+          dishId={props.dish.id}/>
     </div>
   </div>
 );
