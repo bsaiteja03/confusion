@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Row, Col, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, Form, Errors, actions } from 'react-redux-form';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -20,17 +20,18 @@ class Contact extends Component {
             const target = event.target;
             const value = target.type === 'checkbox' ? target.checked : target.value;
             const name = target.name;
-        
+
             this.setState({
             [name]: value
             });
         }
         handleSubmit(values) {
-            console.log('Current State is: ' + JSON.stringify(values));
-            alert('Current State is: ' + JSON.stringify(values));
-            // event.preventDefault();
-        }
-            
+          console.log('Current State is: ' + JSON.stringify(values));
+          alert('Current State is: ' + JSON.stringify(values));
+          this.props.resetFeedbackForm();
+      // event.preventDefault();
+  }
+
     render(){
         return(
             <div className="container">
@@ -42,7 +43,7 @@ class Contact extends Component {
                     <div className="col-12">
                         <h3>Contact Us</h3>
                         <hr />
-                    </div>                
+                    </div>
                 </div>
                 <div className="row row-content">
                         <div className="col-12">
@@ -75,8 +76,8 @@ class Contact extends Component {
                       <h3>Send us your Feedback</h3>
                    </div>
                     <div className="col-12 col-md-9">
-                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-                    <Row className="form-group">
+                    <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
+                              <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
                                     <Control.text model=".firstname" id="firstname" name="firstname"
@@ -198,7 +199,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                </div>
 
@@ -207,7 +208,7 @@ class Contact extends Component {
         );
 
     }
-    
+
 }
 
 export default Contact;
